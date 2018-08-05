@@ -64,13 +64,10 @@ typedef struct _IMAGE_DOS_HEADER {
 	WORD e_oeminfo;
 	WORD e_res2p[10];
 	DWORD e_lfanew;
-}IMAGE_DOS_HEADER;
+} IMAGE_DOS_HEADER;
 
-typedef struct _IMAGE_NT_HEADERS {
-	DWORD                 Signature;
-	IMAGE_FILE_HEADER     FileHeader;
-	IMAGE_OPTIONAL_HEADER OptionalHeader;
-} IMAGE_NT_HEADERS;
+
+
 typedef struct _IMAGE_FILE_HEADER {
 	WORD  Machine;
 	WORD  NumberOfSections;
@@ -80,7 +77,10 @@ typedef struct _IMAGE_FILE_HEADER {
 	WORD  SizeOfOptionalHeader;
 	WORD  Characteristics;
 } IMAGE_FILE_HEADER;
-
+typedef struct _IMAGE_DATA_DIRECTORY {
+	DWORD VirtualAddress;
+	DWORD Size;
+} IMAGE_DATA_DIRECTORY;
 typedef struct _IMAGE_OPTIONAL_HEADER {
 	WORD                 Magic;
 	BYTE                 MajorLinkerVersion;
@@ -114,10 +114,7 @@ typedef struct _IMAGE_OPTIONAL_HEADER {
 	DWORD                NumberOfRvaAndSizes;
 	IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];
 } IMAGE_OPTIONAL_HEADER;
-typedef struct _IMAGE_DATA_DIRECTORY {
-	DWORD VirtualAddress;
-	DWORD Size;
-} IMAGE_DATA_DIRECTORY;
+
 
 typedef struct _IMAGE_SECTION_HEADER {
 	BYTE  Name[IMAGE_SIZEOF_SHORT_NAME];
@@ -160,6 +157,12 @@ typedef struct _IMAGE_IMPORT_DESCRIPTOR {
 	DWORD   FirstThunk;
 } IMAGE_IMPORT_DESCRIPTOR;
 
+typedef struct _IMAGE_NT_HEADERS {
+	DWORD                 Signature;
+	IMAGE_FILE_HEADER     FileHeader;
+	IMAGE_OPTIONAL_HEADER OptionalHeader;
+} IMAGE_NT_HEADERS;
+
 typedef struct _IMAGE_THUNK_DATA32 {
 	union {
 		DWORD ForwarderString;
@@ -174,8 +177,14 @@ typedef struct _IMAGE_IMPORT_BY_NAME {
 	BYTE    Name[1];
 } IMAGE_IMPORT_BY_NAME;
 
-int main()
+int main(int argc, char *argv[])
 {
+	if (argc != 2) {
+		printf("Need argument");
+		return 1;
+	}
+
+	
 
     return 0;
 }
